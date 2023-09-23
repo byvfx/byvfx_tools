@@ -1,0 +1,7 @@
+{
+    "enable" : true,
+    "env": 
+    
+       [ {"HOUDINI_PATH" : "E:\\_houdiniFiles\\BY_python\\hou-tools\\byvfx_tools"}]
+
+}

@@ -8,7 +8,7 @@
         <scriptCode>
 <![CDATA[
 import hou
-hou.ui.displayMessage('BYVFX Tools', help='Build Version: 0.1', title='About', details=None)
+hou.ui.displayMessage('BYVFX Tools', help='Build Version: 1.0.0', title='About', details=None)
 ]]>
         </scriptCode> 
       </scriptItem>

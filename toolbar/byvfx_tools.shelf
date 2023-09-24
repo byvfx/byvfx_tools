@@ -4,16 +4,12 @@
  It should not be hand-edited when it is being used by the application.
  Note, that two definitions of the same element are not allowed in
  a single file. -->
-
-  <toolshelf name="byvfx" label="BYVFX_Tools">
+  <toolshelf name="BYVFX Tools" label="BYVFX Tools">
     <memberTool name="lightConverter"/>
   </toolshelf>
-  <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
-    <script scriptType="python">
-<![CDATA[ 
-from scripts import lightconverter
-lightconverter.show_light_converter()
-]]>
-    </script>
-  </tool>
-</shelfDocument>
+    <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
+      <script scriptType="python"><![CDATA[ 
+  import lightconverter lightconverter.show_light_converter()
+  ]]></script>
+    </tool>
+  </shelfDocument>

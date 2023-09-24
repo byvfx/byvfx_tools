@@ -118,4 +118,5 @@ def show_light_converter():
     dialog.exec_()
 
 # Call the UI
-show_light_converter()
+if __name__ == "__main__":
+    show_light_converter()

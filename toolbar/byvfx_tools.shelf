@@ -8,4 +8,12 @@
   <toolshelf name="byvfx" label="BYVFX_Tools">
     <memberTool name="lightConverter"/>
   </toolshelf>
+  <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
+    <script scriptType="python">
+<![CDATA[ 
+from scripts import lightconverter
+lightconverter.show_light_converter()
+]]>
+    </script>
+  </tool>
 </shelfDocument>

@@ -1,3 +1,4 @@
+import hou
 def convert_redshift_to_mantra(selected_nodes=None):
     """
     Convert Redshift lights in Houdini to Mantra lights.

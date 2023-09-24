@@ -1,7 +1,7 @@
 from PySide2 import QtWidgets, QtGui, QtCore
 import hou
-import redshift_to_mantra_function as redshift_to_mantra
-import mantra_to_redshift_function as mantra_to_redshift
+from BY import redshift_to_mantra_function as redshift_to_mantra
+from BY import mantra_to_redshift_function as mantra_to_redshift
 
 class LightConverterDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mainMenu>
+  <menuBar>
+    <subMenu id="Byvfx_tools">
+      <label>BYVFX Tools</label>
+      <scriptItem id="by_about">
+        <label>About</label>
+        <scriptCode>
+<![CDATA[
+import hou
+hou.ui.displayMessage('BYVFX Tools', help='Build Version: 0.1', title='About', details=None)
+]]>
+        </scriptCode> 
+      </scriptItem>
+    </subMenu>
+  </menuBar>
+</mainMenu>

@@ -1,3 +1,4 @@
+import hou
 def convert_mantra_to_redshift(selected_nodes=None):
     """
     Convert Mantra lights in Houdini to Redshift lights.
@@ -72,7 +73,8 @@ def convert_mantra_to_redshift(selected_nodes=None):
             # Transfer parameters according to the mapping
             for mantra_param, rs_param in param_mapping.items():
                 if node.parm(mantra_param) and rs_node.parm(rs_param):
-
+                     # Set RSL_areashape if light type is 3
+                        
                     # If dealing with light type, there's special handling
                     if mantra_param == "light_type":
                         mantra_value = node.parm(mantra_param).evalAsInt()  # Assuming light_type gives an integer value
@@ -81,7 +83,7 @@ def convert_mantra_to_redshift(selected_nodes=None):
                         cone_parm = node.parm("coneenable")
                         cone_enabled = cone_parm.eval() if cone_parm else False
                         
-                        # Decide the RS value based on Mantra value and cone status
+                         # Decide the RS value based on Mantra value and cone status
                         if cone_enabled:
                             rs_value = 2  # Set RS value to 2 if cone is enabled
                         else:
@@ -98,9 +100,13 @@ def convert_mantra_to_redshift(selected_nodes=None):
                     # For other parameters, just map directly
                     else:
                         rs_node.parm(rs_param).set(node.parm(mantra_param).eval())
-            
+          
                 else:
                     print(f"Failed to map parameter: {mantra_param} to {rs_param}.")  # Debug statement
-
+           
+           
+           # Set RSL_areashape if light type is 3
+            if rs_node.parm("light_type").eval() == 3:
+                rs_node.parm("RSL_areaShape").set(1)
         else:
             print(f"Could not determine the Redshift light type for {main_node_type}.")  # Debug statement

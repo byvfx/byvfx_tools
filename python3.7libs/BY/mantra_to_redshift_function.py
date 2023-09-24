@@ -31,7 +31,7 @@ def convert_mantra_to_redshift(selected_nodes=None):
         5: 3,
         6: 3,
         7: 3,
-        8: 3,
+        8: 0,
     }
 
     if not selected_nodes:
@@ -110,7 +110,7 @@ def convert_mantra_to_redshift(selected_nodes=None):
                     # For other parameters, just map directly
                     else:
                         rs_node.parm(rs_param).set(node.parm(mantra_param).eval())
-          
+                rs_node.setWorldTransform(node.worldTransform())
                 #else:
                    # print(f"Failed to map parameter: {mantra_param} to {rs_param}.")  # Debug statement
         else:

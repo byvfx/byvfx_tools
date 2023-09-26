@@ -1,8 +1,3 @@
-<div class="logo">
-   <a href="https://shangchenzhou.com/projects/ProPainter/">
-      <img src="assets/propainter_logo1_glow.png" style="width:180px">
-   </a>
-</div>
 
 <h1>Official page of BYVFX tools</h1>
 
@@ -14,7 +9,7 @@
 
 
 <div> 
-**If my tools are helpful to you , please help star this repo. Thanks!** 
+**If my tools are helpful to you, please help star this repo. Thanks!** 
 </div> 
 
 ---

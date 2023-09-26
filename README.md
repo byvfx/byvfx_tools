@@ -1,7 +1,3 @@
-# byvfx_tools
-official page of BYVFX tools
-<div align="center">
-
 <div class="logo">
    <a href="https://shangchenzhou.com/projects/ProPainter/">
       <img src="assets/propainter_logo1_glow.png" style="width:180px">
@@ -39,3 +35,5 @@ official page of BYVFX tools
 
 ## Contact
 If you have any questions, please feel free to reach me out at `brandon@byvfx.com`.
+=======
+Installation please use JSON / package workflow, the package json is located in the package directory

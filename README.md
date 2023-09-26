@@ -1,41 +1,25 @@
-# byvfx_tools
-official page of BYVFX tools
-<div align="center">
+# Official page of BYVFX tools
 
-<div class="logo">
-   <a href="https://shangchenzhou.com/projects/ProPainter/">
-      <img src="assets/propainter_logo1_glow.png" style="width:180px">
-   </a>
-</div>
+[BYVFX](https://byvfx.com/) | [My Linkedin](https://linkedin.com/brandoncyoung)
 
-<h1>Pfficial page of BYVFX tools</h1>
-
-<div>
-    <a href='https://byvfx.com/' target='_blank'>BYVFX</a>&emsp;
-    <a href='https://linkedin.com/brandoncyoung' target='_blank'>My Linkedin</a>&emsp;
-
-</div>
-
-
-<div> 
-**If my tools are helpful to you , please help star this repo. Thanks!** 
-</div> 
+> **If my tools are helpful to you, please help star this repo. Thanks!**
 
 ---
 
-
-
 ## Update
+
 - **2023.09.23**: This repo is created.
 
+## TODO
 
-### TODO
-- [ ] Add Arnold support for light converter.  
-- [ ] Add Vray support for light converter.  
+- [ ] Add Arnold support for the light converter.  
+- [ ] Add Vray support for the light converter.  
 - [ ] Add video demos for tools.
-  
 
-
+---
 
 ## Contact
-If you have any questions, please feel free to reach me out at `brandon@byvfx.com`.
+
+If you have any questions, please feel free to reach out to me at [brandon@byvfx.com](mailto:brandon@byvfx.com).
+
+**Installation**: Please use the JSON/package workflow; the package JSON is located in the package directory.

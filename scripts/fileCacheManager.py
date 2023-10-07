@@ -62,8 +62,8 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
     # Adjusting column width for QTreeWidget
         for i in range(self.tree.columnCount()):
             self.tree.resizeColumnToContents(i)
-        
-        width_required = self.tree.verticalScrollBar().width()
+
+        width_required = self.tree.header().length()
         for i in range(self.tree.columnCount()):
             width_required += self.tree.columnWidth(i)
 
@@ -87,12 +87,15 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
 
 
     def show_context_menu(self, position):
+        print("Debug: Entered show_context_menu")
+
         global_position = self.tree.viewport().mapToGlobal(position)
         context_menu = QtWidgets.QMenu(self)
         
         item = self.tree.currentItem()
+        context_menu.setDefaultAction(None)
         if item is None:
-            # Handle the case where no item is selected or other unusual states
+            print("Debug: No tree item selected")
             return
 
         # Initialize the action variables
@@ -103,25 +106,38 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
         change_group_color_action = None
 
         if item.parent() is None:  # Ensures we're on a group item
-            change_group_color_action = context_menu.addAction("Change Group Color")
+            print("Debug: Context menu for a group item")
+            #change_group_color_action = context_menu.addAction("Change Group Color")
             create_group_action = context_menu.addAction("Create Group")
             rename_group_action = context_menu.addAction("Rename Group")
         else:
+            print("Debug: Context menu for a node item")
             focus_node_action = context_menu.addAction("Focus on Node")
             add_to_group_action = context_menu.addAction("Add to Group")
 
         action = context_menu.exec_(global_position)
+        if action is None:
+            print("Debug: No action selected")
+            return
+        
+        print(f"Debug: Selected action: {action}")
 
         if action == focus_node_action:
+            print("Debug: Executing focus_on_selected_node()")
             self.focus_on_selected_node()
         elif action == change_group_color_action:
+            print("Debug: Executing change_group_color()")
             change_group_color(self, item)
         elif action == create_group_action:
+            print("Debug: Executing create_group()")
             self.create_group()
         elif action == add_to_group_action:
+            print("Debug: Executing add_to_group()")
             self.add_to_group()
         elif action == rename_group_action:
+            print("Debug: Executing rename_group()")
             self.rename_group()
+
 
     
     def add_to_group(self):
@@ -143,21 +159,23 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
 
     def focus_on_selected_node(self):
         item = self.tree.currentItem()
-        if item and item.parent():
-            full_node_path = item.text(2)
+        if item and item.parent():  # Ensure it's a child item (a node, not a group)
+            node_name = item.text(0)
+            node_path = item.text(1)
+            full_node_path = node_path + "/" + node_name
             node = hou.node(full_node_path)
+            print(node)
+            print(full_node_path)
             if node:
-                # Deselect all nodes at the node's parent level
-                for sibling in node.parent().children():
-                    sibling.setSelected(False)
-                
-                # Now, select only the desired node
-                node.setSelected(True)
+                # Select only the desired node
+                node.setSelected(True, clear_all_selected=True)
 
+                # Frame the selected node in the network editor
                 for pane in hou.ui.paneTabs():
                     if isinstance(pane, hou.NetworkEditor):
                         pane.setPwd(node.parent())
                         pane.frameSelection()
+                        pane.setZoom(2)
 
     def create_group(self):
         group_name, ok = QtWidgets.QInputDialog.getText(self, "Create Group", "Group Name:")
@@ -176,11 +194,14 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
             new_group_name, ok2 = QtWidgets.QInputDialog.getText(self, "Rename Group", "New Group Name:")
             if ok2 and new_group_name:
                 self.data_model[new_group_name] = self.data_model.pop(item)
-                self.save_groups_to_json()  # Save after renaming a group
-                self.update_tree()
-                self.load_groups_from_json()
-                self.update_tree()
-
+                if item in self.group_colors:
+                    self.group_colors[new_group_name] = self.group_colors[item]
+                
+                    
+            self.save_groups_to_json()  # Save after renaming a group
+            self.update_tree()
+            self.load_groups_from_json()
+            self.update_tree()   
 
 app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
 window = FileCacheNodeEditor()

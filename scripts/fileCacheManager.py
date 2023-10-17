@@ -2,6 +2,7 @@
 
 from PySide2 import QtWidgets, QtCore, QtGui
 import hou
+import json
 
 def get_filecache_nodes():
     filecache_nodes = []
@@ -15,13 +16,14 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(FileCacheNodeEditor, self).__init__(parent)
         self.setWindowTitle("File Cache Manager")
+    
 
         self.layout = QtWidgets.QVBoxLayout(self)
 
         self.tree = QtWidgets.QTreeWidget(self)
         self.tree.setColumnCount(3)
         self.tree.setHeaderLabels(['Node Name', 'Node Location', 'Path'])
-        #self.tree.doubleClicked.connect(self.edit_path_in_tree)
+        self.tree.itemDoubleClicked.connect(self.rename_on_double_click)
         self.layout.addWidget(self.tree)
 
         self.tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -159,16 +161,20 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
 
 
     def rename_group(self):
-        items = list(self.data_model.keys())
-        item, ok = QtWidgets.QInputDialog.getItem(self, "Rename Group", "Select Group to Rename:", items, 0, False)
-        if ok and item:
-            new_group_name, ok2 = QtWidgets.QInputDialog.getText(self, "Rename Group", "New Group Name:")
-            if ok2 and new_group_name:
-                self.data_model[new_group_name] = self.data_model.pop(item)
+        item = self.tree.currentItem()  # Get the selected tree item
+        if item and not item.parent():  # Ensure it's a group item
+            group_name = item.text(0)
+            new_group_name, ok = QtWidgets.QInputDialog.getText(self, "Rename Group", "New Group Name:", QtWidgets.QLineEdit.Normal, group_name)
+            if ok and new_group_name:
+                self.data_model[new_group_name] = self.data_model.pop(group_name)
                 self.save_groups_to_json()  # Save after renaming a group
                 self.update_tree()
-                self.load_groups_from_json()
-                self.update_tree()
+
+    
+    def rename_on_double_click(self, item, column):
+        if not item.parent():  # Ensure it's a group item
+            self.rename_group()
+
 
 
 app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])

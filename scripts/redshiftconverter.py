@@ -4,6 +4,7 @@ import clipboard
 
 def run_texture_processor(input_file, options):
     try:
+        # replace the path to TextureProcessor.exe with the path to your TextureProcessor.exe
         command = ['TextureProcessor.exe', input_file] + options
         result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if result.returncode == 0:
@@ -16,6 +17,7 @@ def run_texture_processor(input_file, options):
 def main():
     sg.theme('Dark')
 
+# arguments for TextureProcessor.exe
     layout = [
         [sg.Text('Texture Processor', font=('Helvetica', 20))],
         [sg.Text('Select the directory containing texture files:')],

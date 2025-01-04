@@ -4,6 +4,8 @@ from PySide2 import QtWidgets, QtCore, QtGui
 import hou
 import json
 
+get_houdini_path = hou.getenv("HOUDINI_USER_PREF_DIR")
+json_file_path = get_houdini_path + "/scripts/groups_data.json"
 def get_filecache_nodes():
     filecache_nodes = []
     for node in hou.node("/").allSubChildren():
@@ -33,7 +35,7 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
         self.load_groups_from_json()
         self.update_tree()
         
-    def load_groups_from_json(self, json_file_path="groups_data.json"):
+    def load_groups_from_json(self, json_file_path=json_file_path):
         try:
             with open(json_file_path, 'r') as file:
                 self.data = json.load(file)
@@ -45,7 +47,7 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
 
 
 
-    def save_groups_to_json(self, json_file_path="groups_data.json"):
+    def save_groups_to_json(self, json_file_path=json_file_path):
         with open(json_file_path, 'w') as file:
             json.dump({"nodes": self.data_model, "colors": self.group_colors}, file, indent=4)
 

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    BYVFX Custom Menu Items
+    This file defines custom right-click menu actions for various node types
+-->
+<menuDocument>
+    <!-- Menu items for Alembic nodes -->
+    <menu>
+        <subMenu id="fx_freelancer_abc">
+            <label>BYVFX</label>
+            
+            <!-- This entry will appear for all Alembic nodes -->
+            <scriptItem id="split_abc">
+                <label>Split Alembic</label>
+                <context>
+                    <expression>
+                        <!-- Only show for Alembic nodes -->
+                        return kwargs["node"].type().name() == "alembic"
+                    </expression>
+                </context>
+                <scriptCode>
+                    <![CDATA[
+                    # Get the selected node
+                    node = kwargs["node"]
+                    
+                    # Import our splitting utility
+                    import fx_freelancer.utils.abc_splitter as splitter
+                    
+                    # Execute the split operation
+                    splitter.split_abc(node)
+                    ]]>
+                </scriptCode>
+            </scriptItem>
+        </subMenu>
+    </menu>
+
+    <!-- Menu items for Pyro nodes -->
+    <menu>
+        <subMenu id="fx_freelancer_pyro">
+            <label>BYVFX</label>
+            
+            <!-- Quick setup for common pyro effects -->
+            <scriptItem id="setup_explosion">
+                <label>Quick Explosion Setup</label>
+                <context>
+                    <expression>
+                        return kwargs["node"].type().name() in ["pyrosolver", "dopplerserver"]
+                    </expression>
+                </context>
+                <scriptCode>
+                    <![CDATA[
+                    import fx_freelancer.utils.pyro_setup as pyro
+                    
+                    node = kwargs["node"]
+                    pyro.create_explosion_setup(node)
+                    ]]>
+                </scriptCode>
+            </scriptItem>
+
+            <scriptItem id="add_turbulence">
+                <label>Add Turbulence Field</label>
+                <context>
+                    <expression>
+                        return kwargs["node"].type().name() == "pyrosolver"
+                    </expression>
+                </context>
+                <scriptCode>
+                    <![CDATA[
+                    import fx_freelancer.utils.pyro_setup as pyro
+                    
+                    node = kwargs["node"]
+                    pyro.add_turbulence(node)
+                    ]]>
+                </scriptCode>
+            </scriptItem>
+        </subMenu>
+    </menu>
+
+    <!-- Menu items for RBD nodes -->
+    <menu>
+        <subMenu id="fx_freelancer_rbd">
+            <label>BYVFX</label>
+            
+            <scriptItem id="setup_metal_bend">
+                <label>Metal Bending Setup</label>
+                <context>
+                    <expression>
+                        return kwargs["node"].type().name() in ["rbdfracture", "rbdpackedsolver"]
+                    </expression>
+                </context>
+                <scriptCode>
+                    <![CDATA[
+                    import fx_freelancer.utils.rbd_setup as rbd
+                    
+                    node = kwargs["node"]
+                    rbd.create_metal_bend_setup(node)
+                    ]]>
+                </scriptCode>
+            </scriptItem>
+        </subMenu>
+    </menu>
+
+    <!-- Animation finder context menu -->
+    <menu>
+        <subMenu id="fx_freelancer_utils">
+            <label>BYVFX</label>
+            
+            <scriptItem id="find_animated">
+                <label>Find Animated Parameters</label>
+                <context>
+                    <expression>
+                        # Available on any SOP node
+                        return kwargs["node"].type().category().name() == "Sop"
+                    </expression>
+                </context>
+                <scriptCode>
+                    <![CDATA[
+                    import fx_freelancer.utils.anim_finder as finder
+                    
+                    node = kwargs["node"]
+                    finder.highlight_animated_parms(node)
+                    ]]>
+                </scriptCode>
+            </scriptItem>
+        </subMenu>
+    </menu>
+</menuDocument>

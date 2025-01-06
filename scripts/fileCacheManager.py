@@ -107,8 +107,8 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
 
         if action == focus_node_action:
             self.focus_on_selected_node()
-        elif action == change_group_color_action:
-            change_group_color(self, item)
+       # elif action == change_group_color_action:
+            #change_group_color(self, item)
         elif action == create_group_action:
             self.create_group()
         elif action == add_to_group_action:
@@ -161,6 +161,14 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
             self.load_groups_from_json()
             self.update_tree()
 
+
+    def change_group_color(self, item):
+        color = QtWidgets.QColorDialog.getColor()
+        if color.isValid():
+            group_name = item.text(0)
+            self.group_colors[group_name] = color.name()
+            self.save_groups_to_json()
+            self.update_tree()
 
     def rename_group(self):
         item = self.tree.currentItem()  # Get the selected tree item

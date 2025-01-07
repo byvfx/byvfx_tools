@@ -1,81 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-    BYVFX Tools Custom Menu Items
-    This file defines custom right-click menu actions for various node types
--->
 <menuDocument>
-    <!-- Menu items for Alembic nodes -->
     <menu>
-        <subMenu id="byvfx_abc">
-            <label>BYVFX Tools</label>
+        <subMenu id="byvfx_tools">
+            <label>BYVFX</label>
             
-            <scriptItem id="split_abc">
-                <label>Split Alembic</label>
+            <scriptItem id="split_abc_path">
+                <label>Split Alembic via Path</label>
                 <context>
                     <expression>
                         return kwargs["node"].type().name() == "alembic"
                     </expression>
                 </context>
-                <scriptCode>
-                    <![CDATA[
-                    # Get the selected node
-                    node = kwargs["node"]
-                    
-                    # Import our splitting utility
-                    import byvfx.utils.abc_splitter as splitter
-                    
-                    # Execute the split operation
-                    splitter.split_abc(node)
-                    ]]>
-                </scriptCode>
+                <scriptCode><![CDATA[
+from byvfx.utils import splitABC_path
+splitABC_path.show_splitter_ui()
+]]></scriptCode>
             </scriptItem>
-        </subMenu>
-    </menu>
 
-    <!-- Menu items for Pyro nodes -->
-    <menu>
-        <subMenu id="byvfx_pyro">
-            <label>BYVFX Tools</label>
+            <!-- Add a separator between the two splitting methods -->
+            <separatorItem/>
             
-            <scriptItem id="setup_explosion">
-                <label>Quick Explosion Setup</label>
+            <scriptItem id="split_abc_groups">
+                <label>Split Alembic via Groups</label>
                 <context>
                     <expression>
-                        return kwargs["node"].type().name() in ["pyrosolver", "dopplerserver"]
+                        return kwargs["node"].type().name() == "alembic"
                     </expression>
                 </context>
-                <scriptCode>
-                    <![CDATA[
-                    import byvfx.utils.pyro_setup as pyro
-                    
-                    node = kwargs["node"]
-                    pyro.create_explosion_setup(node)
-                    ]]>
-                </scriptCode>
-            </scriptItem>
-        </subMenu>
-    </menu>
-
-    <!-- Menu items for RBD nodes -->
-    <menu>
-        <subMenu id="byvfx_rbd">
-            <label>BYVFX Tools</label>
-            
-            <scriptItem id="setup_metal_bend">
-                <label>Metal Bending Setup</label>
-                <context>
-                    <expression>
-                        return kwargs["node"].type().name() in ["rbdfracture", "rbdpackedsolver"]
-                    </expression>
-                </context>
-                <scriptCode>
-                    <![CDATA[
-                    import byvfx.utils.rbd_setup as rbd
-                    
-                    node = kwargs["node"]
-                    rbd.create_metal_bend_setup(node)
-                    ]]>
-                </scriptCode>
+                <scriptCode><![CDATA[
+from byvfx.utils import splitABC_groups
+splitABC_groups.show_splitter_ui()
+]]></scriptCode>
             </scriptItem>
         </subMenu>
     </menu>

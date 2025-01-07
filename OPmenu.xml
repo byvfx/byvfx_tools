@@ -2,8 +2,9 @@
 <menuDocument>
     <menu>
         <subMenu id="byvfx_tools">
-            <label>BYVFX</label>
+            <label>[BYVFX]</label>
             
+            <!-- Alembic splitting tools -->
             <scriptItem id="split_abc_path">
                 <label>Split Alembic via Path</label>
                 <context>
@@ -17,7 +18,6 @@ splitABC_path.show_splitter_ui()
 ]]></scriptCode>
             </scriptItem>
 
-            <!-- Add a separator between the two splitting methods -->
             <separatorItem/>
             
             <scriptItem id="split_abc_groups">
@@ -30,6 +30,29 @@ splitABC_path.show_splitter_ui()
                 <scriptCode><![CDATA[
 from byvfx.utils import splitABC_groups
 splitABC_groups.show_splitter_ui()
+]]></scriptCode>
+            </scriptItem>
+
+            <!-- Add another separator before the Mass Merger -->
+            <separatorItem/>
+            
+            <!-- Mass Merger tool -->
+            <scriptItem id="mass_merger">
+                <label>Mass Merger</label>
+                <context>
+                    <expression>
+                        # Check if we're in the obj context and have nodes selected
+                        node = kwargs["node"]
+                        return (
+                            node is not None and 
+                            node.path().startswith("/obj") and 
+                            len(hou.selectedNodes()) > 0
+                        )
+                    </expression>
+                </context>
+                <scriptCode><![CDATA[
+from byvfx.utils.mass_merger import merge_selected_nodes
+merge_selected_nodes()
 ]]></scriptCode>
             </scriptItem>
         </subMenu>

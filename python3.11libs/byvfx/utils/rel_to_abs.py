@@ -1,7 +1,16 @@
 import hou
 import re
+
 def get_all_parms(kwargs, unlocked_only=False):
-    """Get all (both normal and locked) parms, related to an RMB menu click.
+    """
+    Get all (both normal and locked) parms, related to an RMB menu click.
+    
+    Args:
+        kwargs (dict): Dictionary containing keyword arguments
+        unlocked_only (bool): Whether to include only unlocked parameters
+        
+    Returns:
+        list: List of parameters
     """
     r = None
     try:
@@ -13,12 +22,17 @@ def get_all_parms(kwargs, unlocked_only=False):
     return r
 
 def reset_parms(kwargs, unlocked_only=False):
-    """Reset all parameters to their default state.
+    """
+    Reset all parameters to their default state.
     Especially important is to remove all expression links, as they can
     throw off setting values (the values will be set on parms pointed to
     by the expression). 
 
     Hopefully this covers all (or, most) scenarios.
+    
+    Args:
+        kwargs (dict): Dictionary containing keyword arguments
+        unlocked_only (bool): Whether to include only unlocked parameters
     """
     try:
         parms = get_all_parms(kwargs, unlocked_only=unlocked_only)
@@ -30,20 +44,28 @@ def reset_parms(kwargs, unlocked_only=False):
         pass
     
 def reset_parm(parm):
-    """.
     """
-    reset_parms( { "parms": (parm, ) } )
+    Reset a single parameter to its default state.
+    
+    Args:
+        parm (hou.Parm): The parameter to reset
+    """
+    reset_parms({"parms": (parm,)})
 
 def toggle_abs_rel_path(kwargs):
-    """Converts between absolute and relative OP paths.
+    """
+    Converts between absolute and relative OP paths.
     (Called from PARMmenu.xml)
+    
+    Args:
+        kwargs (dict): Dictionary containing keyword arguments
     """
     parms = get_all_parms(kwargs)
-    to_abs = None # None=yet to be decided, True=convert to abs 1=to rel
+    to_abs = None  # None=yet to be decided, True=convert to abs 1=to rel
 
     for parm in parms:
         pnode = parm.node()
-        paths_in = parm.evalAsString().split() # paths as string
+        paths_in = parm.evalAsString().split()  # paths as string
         paths_out = []
 
         for path in paths_in:
@@ -51,7 +73,7 @@ def toggle_abs_rel_path(kwargs):
             if pnode.parm(path):
                 # if it's a parm, pop/remember parm name and still deal w/ node paths
                 parmname = re.search("/[^/]+$", path).group(0)
-                path = re.sub(parmname+"$", "", path)
+                path = re.sub(parmname + "$", "", path)
 
             target = pnode.node(path)
 
@@ -62,9 +84,9 @@ def toggle_abs_rel_path(kwargs):
 
                 # decide if we want to convert all to abs or rel
                 if to_abs is None:
-                    to_abs = re.sub("[/]+$", "", path)!=path_abs # (strip trailing slashes for comparison)
+                    to_abs = re.sub("[/]+$", "", path) != path_abs  # (strip trailing slashes for comparison)
 
-                paths_out.append( (path_abs if to_abs else path_rel) + parmname )
+                paths_out.append((path_abs if to_abs else path_rel) + parmname)
             else:
                 # probably a pattern, don't deal with it
                 paths_out.append(path + parmname)

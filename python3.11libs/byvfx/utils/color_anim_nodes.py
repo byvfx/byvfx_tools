@@ -1,6 +1,9 @@
 import hou
 
 def color_animated_nodes():
+    """
+    Color all animated nodes in the current network with a user-selected color.
+    """
     # Get color from user
     user_color = hou.ui.selectColor()
     if user_color is None:

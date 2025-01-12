@@ -1,7 +1,7 @@
 from PySide2 import QtWidgets, QtGui, QtCore
 import hou
-from typing import List, Dict, Optional, Union
-from . import mantra, redshift
+from typing import List, Optional
+from .converters import mantra_to_redshift, redshift_to_mantra
 
 LIGHT_MAPPING = {
     # Mantra lights
@@ -56,10 +56,10 @@ def convert_light(node: hou.Node, target_renderer: str) -> Optional[hou.Node]:
         # Convert based on target
         if target_renderer == "redshift":
             if current_renderer == "mantra":
-                return redshift.convert_mantra_to_redshift([node])[0]
+                return mantra_to_redshift([node])[0]
         elif target_renderer == "mantra":
             if current_renderer == "redshift":
-                return mantra.convert_redshift_to_mantra([node])[0]
+                return redshift_to_mantra([node])[0]
     except Exception as e:
         raise RuntimeError(f"Error converting {node.path()}: {str(e)}")
 

@@ -2,4 +2,6 @@
 """
 Light converter tool for transforming lights between different renderers
 """
-from .converter import show_light_converter
+from .light_converter import show_light_converter
+
+__all__ = ['show_light_converter']

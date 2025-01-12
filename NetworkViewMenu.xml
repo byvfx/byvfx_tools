@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mainMenu>
+    <menuBar>
+        <subMenu id="BYVFX_Tools">
+            <modifyItem><insertBefore>help_menu</insertBefore></modifyItem>
+            <label>BYVFX_Tools</label>
+            
+            <subMenu id="modeling_tools">
+                <label>Modeling</label>
+                <scriptItem id="tool_1">
+                    <label>Modeling Tool 1</label>
+                </scriptItem>
+                <scriptItem id="tool_2">
+                    <label>Modeling Tool 2</label>
+                </scriptItem>
+            </subMenu>
+
+            <subMenu id="fx_tools">
+                <label>FX</label>
+                <scriptItem id="fx_1">
+                    <label>FX Tool 1</label>
+                </scriptItem>
+                <scriptItem id="fx_2">
+                    <label>FX Tool 2</label>
+                </scriptItem>
+            </subMenu>
+
+            <subMenu id="utility_tools">
+                <label>Utilities</label>
+                <scriptItem id="Color_Animated_Nodes">
+                    <label>Color Animated Nodes</label>
+                    <scriptCode><![CDATA[
+from byvfx.utils import color_anim_nodes
+color_anim_nodes.color_animated_nodes()
+]]></scriptCode>
+                </scriptItem>
+                <scriptItem id="util_2">
+                    <label>Utility Tool 2</label>
+                </scriptItem>
+            </subMenu>
+
+        </subMenu>
+    </menuBar>
+</mainMenu>

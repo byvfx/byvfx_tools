@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menuDocument>
+
+    <menu>
+
+<!-- <subMenu id="BYMaster_Parms"> -->
+<!-- <label>BYVFX Tools</label> -->
+
+<!--         <subMenu id="ValueEnter">
+            <label>Value Enter</label>
+            <insertBefore /> -->
+            <scriptItem id="OD_venter">
+                <!-- <insertBefore /> -->
+                <label> [BYVFX] Relative to Absolute</label>
+                <scriptCode>
+<![CDATA[
+from byvfx.utils import rel_to_abs
+rel_to_abs.toggle_abs_rel_path(kwargs)
+]]>
+                </scriptCode>
+            </scriptItem>
+<!-- </subMenu> -->
+    </menu>
+</menuDocument>

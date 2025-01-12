@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shelfDocument>
+  <!-- This file contains definitions of shelves, toolbars, and tools.
+ It should not be hand-edited when it is being used by the application.
+ Note, that two definitions of the same element are not allowed in
+ a single file. -->
+
   <toolshelf name="byvfx_tools" label="BYVFX Tools">
     <memberTool name="lightConverter"/>
     <memberTool name="massMerger"/>
+    <memberTool name="test_tinker"/>
   </toolshelf>
 
-  <tool name="lightConverter" 
-        label="Light Converter" 
-        icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg"
-        >
+  <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
     <script scriptType="python"><![CDATA[
 from byvfx.tools.light_converter import show_light_converter
 show_light_converter()
 ]]></script>
   </tool>
 
-  <tool name="massMerger"
-        label="Mass Merger"
-        icon="hicon:/SVGIcons.index?BUTTONS_merge.svg">
+  <tool name="massMerger" label="Mass Merger" icon="hicon:/SVGIcons.index?BUTTONS_merge.svg">
     <script scriptType="python"><![CDATA[
 from byvfx.utils.mass_merger import merge_selected_nodes
 merge_selected_nodes()

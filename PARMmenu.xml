@@ -10,9 +10,9 @@
 <!--         <subMenu id="ValueEnter">
             <label>Value Enter</label>
             <insertBefore /> -->
-            <scriptItem id="OD_venter">
+            <scriptItem id="BYVFX_RelToAbs">
                 <!-- <insertBefore /> -->
-                <label> [BYVFX] Relative to Absolute</label>
+                <label> [BYVFX] Relative to Absolute Toggle</label>
                 <scriptCode>
 <![CDATA[
 from byvfx.utils import rel_to_abs

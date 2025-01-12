@@ -1,28 +1,21 @@
 import hou
+
 def color_animated_nodes():
+    # Get color from user
     user_color = hou.ui.selectColor()
-    
     if user_color is None:
         return
-        
+
+    # Get current node and its parent
     network = hou.ui.paneTabOfType(hou.paneTabType.NetworkEditor)
-    if not network:
-        raise RuntimeError("No network editor pane found")
-        
-    current_node = network.currentNode()
-    if not current_node:
-        raise RuntimeError("No current node found")
+    if not network or not network.currentNode():
+        return
     
-    parent = current_node.parent()
-    
+    parent = network.currentNode().parent()
+
+    # Color the animated nodes
     for node in parent.children():
-        is_animated = False
         for parm in node.parms():
             if parm.isTimeDependent():
-                is_animated = True
+                node.setColor(user_color)
                 break
-                
-        if is_animated:
-            node.setColor(user_color)
-
-color_animated_nodes()

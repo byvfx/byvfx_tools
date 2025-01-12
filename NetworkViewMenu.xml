@@ -30,7 +30,12 @@
                 <scriptItem id="Color_Animated_Nodes">
                     <label>Color Animated Nodes</label>
                     <scriptCode><![CDATA[
-from byvfx.utils import color_anim_nodes
+import sys
+module_name = 'byvfx.utils.color_anim_nodes'
+if module_name not in sys.modules:
+    from byvfx.utils import color_anim_nodes
+else:
+    color_anim_nodes = sys.modules[module_name]
 color_anim_nodes.color_animated_nodes()
 ]]></scriptCode>
                 </scriptItem>

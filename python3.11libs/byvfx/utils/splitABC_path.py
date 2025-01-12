@@ -4,9 +4,6 @@ ABC Splitter Utility for Houdini.
 This module provides functionality to split Alembic nodes into separate geometries
 based on their path attributes.
 
-author:     brandon young | http://www.byvfx.com
-date:       2023.07.25
-version:    0.6
 """
 
 import hou

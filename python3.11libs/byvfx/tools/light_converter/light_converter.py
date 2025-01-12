@@ -1,7 +1,8 @@
-from PySide2 import QtWidgets, QtGui, QtCore
+from PySide2 import QtWidgets, QtCore
 import hou
 from typing import List, Optional
-from .converters import mantra_to_redshift, redshift_to_mantra
+from .converters import convert_mantra_to_redshift, convert_redshift_to_mantra
+from .constants import SUPPORTED_LIGHTS
 
 LIGHT_MAPPING = {
     # Mantra lights
@@ -56,10 +57,10 @@ def convert_light(node: hou.Node, target_renderer: str) -> Optional[hou.Node]:
         # Convert based on target
         if target_renderer == "redshift":
             if current_renderer == "mantra":
-                return mantra_to_redshift([node])[0]
+                return convert_mantra_to_redshift([node])[0]
         elif target_renderer == "mantra":
             if current_renderer == "redshift":
-                return redshift_to_mantra([node])[0]
+                return convert_redshift_to_mantra([node])[0]
     except Exception as e:
         raise RuntimeError(f"Error converting {node.path()}: {str(e)}")
 
@@ -181,27 +182,19 @@ class LightConverterDialog(QtWidgets.QDialog):
             self.add_lights_recursive(child_node)
 
     def get_selected_nodes(self, renderer_type: str) -> List[hou.Node]:
-        """
-        Get all selected nodes of a specific renderer type.
-        
-        Args:
-            renderer_type (str): The type of renderer ("Mantra" or "Redshift")
-            
-        Returns:
-            List[hou.Node]: List of selected nodes of the specified type
-            
-        Raises:
-            ValueError: If no lights of the specified type are selected
-        """
-        selected_nodes = [
-            hou.node("/obj/" + item.text(0)) 
-            for item in self.lightTreeWidget.selectedItems() 
-            if item.text(1) == renderer_type
-        ]
-        
+        """Get all selected nodes of a specific renderer type."""
+        selected_nodes = []
+        for item in self.lightTreeWidget.selectedItems():
+            try:
+                node = hou.node("/obj/" + item.text(0))
+                if node and item.text(1) == renderer_type:
+                    selected_nodes.append(node)
+            except hou.OperationFailed:
+                continue
+                
         if not selected_nodes:
             raise ValueError(f"No {renderer_type} lights selected!")
-        
+            
         return selected_nodes
 
     def convert_mantra_to_redshift(self) -> None:

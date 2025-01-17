@@ -3,7 +3,7 @@
   <menuBar>
     <subMenu id="byvfx_tools">
       <label>BYVFX Tools</label>
-      
+      <modifyItem><insertBefore>help_menu</insertBefore></modifyItem>
       <!-- About menu item -->
       <scriptItem id="by_about">
         <label>About</label>

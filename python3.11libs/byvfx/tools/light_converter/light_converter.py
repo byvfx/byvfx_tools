@@ -100,6 +100,11 @@ class LightConverterDialog(QtWidgets.QDialog):
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
         super(LightConverterDialog, self).__init__(parent)
         self.setWindowTitle("Light Converter")
+        # Make window stay on top but allow interaction with other windows
+        self.setWindowFlags(
+            QtCore.Qt.Window |
+            QtCore.Qt.WindowStaysOnTopHint
+        )
         self.setup_ui()
 
 
@@ -241,7 +246,8 @@ class LightConverterDialog(QtWidgets.QDialog):
 def show_light_converter() -> None:
     """Create and show the light converter dialog."""
     dialog = LightConverterDialog(hou.ui.mainQtWindow())
-    dialog.exec_()
+    # Use show() instead of exec_() to make it non-modal
+    dialog.show()
 
 
 if __name__ == "__main__":

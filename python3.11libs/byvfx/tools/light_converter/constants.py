@@ -6,7 +6,9 @@ SUPPORTED_LIGHTS = {
     "envlight": "Mantra",
     # Redshift lights
     "rslight": "Redshift",
-    "rslightdome": "Redshift"
+    "rslightdome": "Redshift",
+    #Octane lights
+    "octane_light": "Octane"
 }
 
 MANTRA_TO_REDSHIFT_PARAMS: Dict[str, str] = {
@@ -33,6 +35,11 @@ REDSHIFT_TO_MANTRA_PARAMS: Dict[str, str] = {
     "light_type": "light_type",
     "coneangle": "coneangle",
 }
+
+OCTANE_TO_MANTRA_PARAMS: Dict[str, str] = {
+    
+    "NT_MAT_DIFFUSE1_diffuse": "light_color",
+    
 
 MANTRA_TO_REDSHIFT_MODES: Dict[int, int] = {
     0: 1,  # Directional

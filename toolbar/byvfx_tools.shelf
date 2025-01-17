@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shelfDocument>
+
   <!-- This file contains definitions of shelves, toolbars, and tools.
  It should not be hand-edited when it is being used by the application.
  Note, that two definitions of the same element are not allowed in
@@ -10,6 +11,18 @@
     <memberTool name="massMerger"/>
     <memberTool name="test_tinker"/>
   </toolshelf>
+
+  <!-- Add toolbar definition to specify menu position -->
+  <toolbar name="byvfx_tools" label="BYVFX Tools">
+    <memberTool name="lightConverter"/>
+    <memberTool name="massMerger"/>
+    <memberTool name="test_tinker"/>
+    <location>
+      <mainMenu>
+        <insertBefore>help_menu</insertBefore>
+      </mainMenu>
+    </location>
+  </toolbar>
 
   <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
     <script scriptType="python"><![CDATA[

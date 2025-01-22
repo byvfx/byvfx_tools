@@ -3,12 +3,6 @@
 [BYVFX](https://byvfx.com/) | [My Linkedin](https://linkedin.com/brandoncyoung)
 
 > **If my tools are helpful to you, please help star this repo. Thanks!**
-# byvfx_tools
-official page of BYVFX tools
-<div align="center">
-    <a href="https://byvfx.com/">
-        <img src="https://byvfx.com/wp-content/uploads/2021/09/byvfx_logo.png" alt="BYVFX" width="200">
-    </a>
 
 <h1>Official page of BYVFX tools</h1>
 
@@ -17,7 +11,6 @@ official page of BYVFX tools
     <a href='https://linkedin.com/brandoncyoung' target='_blank'>My Linkedin</a>&emsp;
 
 </div>
-
 
 <div> 
 If my tools are helpful to you , please help star this repo. Thanks!
@@ -40,7 +33,6 @@ If my tools are helpful to you , please help star this repo. Thanks!
 
 ---
 
----
 
 ## Contact
 

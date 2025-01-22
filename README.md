@@ -4,21 +4,9 @@
 
 > **If my tools are helpful to you, please help star this repo. Thanks!**
 
-<h1>Official page of BYVFX tools</h1>
-
-<div>
-    <a href='https://byvfx.com/' target='_blank'>BYVFX</a>&emsp;
-    <a href='https://linkedin.com/brandoncyoung' target='_blank'>My Linkedin</a>&emsp;
-
-</div>
-
-<div> 
-If my tools are helpful to you , please help star this repo. Thanks!
-</div> 
-
 ---
 
-## Update
+## Updates
 
 
 - **2023.09.23**: This repo is created.

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mainMenu>
   <menuBar>
-    <subMenu id="Byvfx_tools">
+    <subMenu id="byvfx_tools">
       <label>BYVFX Tools</label>
+      <modifyItem><insertBefore>help_menu</insertBefore></modifyItem>
+      <!-- About menu item -->
       <scriptItem id="by_about">
         <label>About</label>
         <scriptCode>
@@ -10,7 +12,22 @@
 import hou
 hou.ui.displayMessage('BYVFX Tools', help='Build Version: 0.1.0', title='About', details=None)
 ]]>
-        </scriptCode> 
+        </scriptCode>
+      </scriptItem>
+
+      <!-- Separator between menu items -->
+      <separatorItem />
+      
+      <!-- GitHub Repository Link -->
+      <scriptItem id="by_github">
+        <label>Visit GitHub Repository</label>
+        <scriptCode>
+<![CDATA[
+import webbrowser
+# Replace this URL with your actual GitHub repository URL
+webbrowser.open('https://github.com/yourusername/byvfx_tools')
+]]>
+        </scriptCode>
       </scriptItem>
     </subMenu>
   </menuBar>

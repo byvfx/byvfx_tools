@@ -106,24 +106,7 @@ BYVFX Tools uses Houdini's package management system for seamless integration in
 }
 ```
 
-### Verifying Installation
-
-After installing, you can verify the setup by:
-
-1. Opening Houdini and checking the package is loaded:
-
-```python
-# Run in Python Shell
-hou.packageRegistry().packages()
-```
-
-1. Checking environment variables:
-
-```python
-# Run in Python Shell
-import os
-print(os.getenv("BYVFX"))
-```
+3. Restart Houdini to load the package
 
 ### Troubleshooting
 

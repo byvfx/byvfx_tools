@@ -1,4 +1,7 @@
-# BYVFX Tools
+<div align="center">
+  <h1>BYVFX Tools</h1>
+</div>
+
 
 <div align="center">
 
@@ -10,11 +13,13 @@
 
 ## Overview
 
-### BYVFX Tools is a collection of utilities designed to streamline FX/CG workflows.
+### BYVFX Tools is a collection of utilities designed to streamline FX/CG workflows
 
 ## ⚡ Core Features
+
 Pre-Built Simulation Caches
 Our extensive library of pre-built caches saves valuable simulation time and ensures consistent, high-quality results.
+
 ### Geometry Caches
 
 Debris Library: Highly detailed, physically accurate debris including rocks, paper, metal pieces, glass, and vegetation
@@ -28,6 +33,7 @@ Smoke Collection: Comprehensive range from subtle dust hits to massive smoke plu
 Explosion Library: Ready-to-use explosion caches for immediate integration
 
 ### Interactive Tools (HDAs)
+
 Powerful Houdini Digital Assets designed for artist-friendly workflow enhancement.
 Effects Generation
 
@@ -44,6 +50,7 @@ Projection Tool: Sophisticated multilayered material projection system
 VEX Snippet Manager: Efficient code management system for VEX snippets
 
 ### Utility Tools
+
 Workflow enhancers designed to speed up common production tasks.
 
 ABC Splitter: Right-click functionality for efficient Alembic file management
@@ -57,6 +64,7 @@ Ready-to-Use Setups
 RBD Examples: Practical setups including bending metal and constraint networks
 PYRO Configurations: Production-optimized Pyro setups with multiple disturb and turbulence fields
 Simulation Samples: Curated examples for Vellum, POP, and MPM simulations
+
 ## 🚀 Upcoming Features
 
 - Arnold support for the light converter
@@ -65,14 +73,14 @@ Simulation Samples: Curated examples for Vellum, POP, and MPM simulations
 - Comprehensive video demonstrations
 - Extended documentation and usage examples
 
-
 # 📦 Installation
 
 BYVFX Tools uses Houdini's package management system for seamless integration into your pipeline. The package system ensures that all tools, HDAs, and resources are properly organized and loaded in your Houdini environment.
 
-### Using Houdini Packages
+## Using Houdini Packages
 
 1. Create a `packages` directory in your Houdini preferences if it doesn't exist:
+
 ```bash
 # Windows
 %USERPROFILE%/Documents/HOUDINIVERSION/packages
@@ -84,36 +92,17 @@ BYVFX Tools uses Houdini's package management system for seamless integration in
 ~/Library/Preferences/houdini/HOUDINIVERSION/packages
 ```
 
-2. Download the BYVFX Tools package and extract it to a location of your choice:
+1. Download the BYVFX Tools package and extract it to a location of your choice:
 
+2. Create a new JSON file named `BYVFX.json` in your packages directory with the following content or use the one provided:
 
-3. Create a new JSON file named `BYVFX.json` in your packages directory with the following content:
 ```json
 {
-    "env": [
-        {
-            "BYVFX": "$HOME/houdini_tools/BYVFX"
-        }
-    ],
-    "path": "$BYVFX",
-    "load_package_once": true,
-    "enable": true,
-    "version": "1.0.0",
-    "hpath": [
-        "$BYVFX/hdas",
-        "$BYVFX/scripts",
-        "$BYVFX/vex"
-    ],
-    "HOUDINI_OTLSCAN_PATH": [
-        "$BYVFX/hdas/tools",
-        "$BYVFX/hdas/gallery"
-    ],
-    "HOUDINI_SCRIPT_PATH": [
-        "$BYVFX/scripts"
-    ],
-    "HOUDINI_VEX_PATH": [
-        "$BYVFX/vex"
-    ]
+    "enable" : true,
+    "env": 
+    
+       [ {"HOUDINI_PATH" : "E:\\_houdiniFiles\\BY_python\\byvfx_tools"}]
+
 }
 ```
 
@@ -122,18 +111,19 @@ BYVFX Tools uses Houdini's package management system for seamless integration in
 After installing, you can verify the setup by:
 
 1. Opening Houdini and checking the package is loaded:
+
 ```python
 # Run in Python Shell
 hou.packageRegistry().packages()
 ```
 
-2. Checking environment variables:
+1. Checking environment variables:
+
 ```python
 # Run in Python Shell
 import os
 print(os.getenv("BYVFX"))
 ```
-
 
 ### Troubleshooting
 
@@ -146,7 +136,6 @@ If you encounter any issues:
 
 For additional help, contact [brandon@byvfx.com](mailto:brandon@byvfx.com)
 
-
 ## 📬 Contact & Support
 
 - Email: [brandon@byvfx.com](mailto:brandon@byvfx.com)
@@ -156,5 +145,3 @@ For additional help, contact [brandon@byvfx.com](mailto:brandon@byvfx.com)
 ---
 
 If you find BYVFX Tools helpful, please consider starring this repository. Your support helps us continue development! ⭐
-
-

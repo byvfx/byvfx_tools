@@ -39,6 +39,7 @@ REDSHIFT_TO_MANTRA_PARAMS: Dict[str, str] = {
 OCTANE_TO_MANTRA_PARAMS: Dict[str, str] = {
     
     "NT_MAT_DIFFUSE1_diffuse": "light_color",
+}
     
 
 MANTRA_TO_REDSHIFT_MODES: Dict[int, int] = {

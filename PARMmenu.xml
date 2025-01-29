@@ -3,16 +3,16 @@
 <menuDocument>
     <menu>
         <label>BYVFX</label>
-            <scriptItem id="BYVFX_RelToAbs">
-                <!-- <insertBefore /> -->
-                <label> [BYVFX] Relative to Absolute Toggle</label>
-                <scriptCode>
+        <scriptItem id="BYVFX_RelToAbs">
+            <!-- <insertBefore /> -->
+                <label>[BYVFX] Relative to Absolute Toggle</label>
+            <scriptCode>
 <![CDATA[
 from byvfx.utils import rel_to_abs
 rel_to_abs.toggle_abs_rel_path(kwargs)
 ]]>
-                </scriptCode>
-            </scriptItem>
+            </scriptCode>
+        </scriptItem>
 <!-- </subMenu> -->
     </menu>
 </menuDocument>

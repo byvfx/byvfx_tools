@@ -1,24 +1,19 @@
 import hou
 
 def color_animated_nodes():
-    """
-    Color all animated nodes in the current network with a user-selected color.
-    """
-    # Get color from user
+    """Colorizes nodes with keyframes in the current network editor."""
     user_color = hou.ui.selectColor()
     if user_color is None:
         return
 
-    # Get current node and its parent
     network = hou.ui.paneTabOfType(hou.paneTabType.NetworkEditor)
     if not network or not network.currentNode():
         return
     
     parent = network.currentNode().parent()
 
-    # Color the animated nodes
     for node in parent.children():
         for parm in node.parms():
-            if parm.isTimeDependent():
+            if parm.keyframes():  # Check for actual keyframes
                 node.setColor(user_color)
                 break

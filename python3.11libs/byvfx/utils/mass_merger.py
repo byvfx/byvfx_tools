@@ -28,6 +28,7 @@ def merge_selected_nodes() -> Optional[hou.Node]:
             name = 'merged_geo'
         merge_node = obj_node.createNode('geo', name)
         merge = merge_node.createNode('merge')
+        null_node = merge_node.createNode('null', 'OUT')
 
         for i, node in enumerate(selected_nodes):
             object_merge = merge_node.createNode('object_merge', node.name())
@@ -35,10 +36,20 @@ def merge_selected_nodes() -> Optional[hou.Node]:
             object_merge.parm('xformtype').set(1)  # Preserve transforms
             merge.setInput(i, object_merge)
             object_merge.moveToGoodPosition()
+            object_merge.setRenderFlag(False)  # Turn off render flag for object_merge nodes
+           
+        # Connect null to merge output
+        null_node.setInput(0, merge)
+        
+       # Ensure correct node display and render flags
+        merge.setRenderFlag(False)  
+        null_node.setRenderFlag(True)  # Set render flag on the OUT node
+        null_node.setDisplayFlag(True)  # Make sure it's displayed
 
         merge.moveToGoodPosition()
+        null_node.moveToGoodPosition()
         merge_node.layoutChildren()
-        merge_node.setSelected(True)
+        null_node.setSelected(True, clear_all_selected=True)
         
         return merge_node
 

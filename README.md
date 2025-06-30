@@ -1,3 +1,5 @@
+# This toolset is not done and is very WIP. its missing a lot of things currently
+
 <div align="center">
   <h1>BYVFX Tools</h1>
 </div>
@@ -34,7 +36,7 @@ Explosion Library: Ready-to-use explosion caches for immediate integration
 
 ### Interactive Tools (HDAs)
 
-Powerful Houdini Digital Assets designed for artist-friendly workflow enhancement.
+Powerful Houdini Digital Assets are designed for artist-friendly workflow enhancement.
 Effects Generation
 
 Spark & Smoke Tool: Interactive spark and smoke generation with frame-specific control

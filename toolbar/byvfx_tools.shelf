@@ -8,6 +8,8 @@
   <toolshelf name="byvfx_tools" label="BYVFX Tools">
     <memberTool name="lightConverter"/>
     <memberTool name="massMerger"/>
+    <memberTool name="vexSnippetManager"/>
+    <memberTool name="camDB"/>
   </toolshelf>
 
   <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
@@ -24,6 +26,24 @@ show_light_converter()
       <![CDATA[
 from byvfx.utils.mass_merger import merge_selected_nodes
 merge_selected_nodes()
+      ]]>
+    </script>
+  </tool>
+
+  <tool name="vexSnippetManager" label="VEX Snippets" icon="hicon:/SVGIcons.index?BUTTONS_script.svg">
+    <script scriptType="python">
+      <![CDATA[
+from byvfx.utils.vex_snippet_manager import show_vex_snippet_manager
+show_vex_snippet_manager()
+      ]]>
+    </script>
+  </tool>
+
+  <tool name="camDB" label="Camera DB" icon="hicon:/SVGIcons.index?BUTTONS_camera.svg">
+    <script scriptType="python">
+      <![CDATA[
+from byvfx.utils.camDB import show_camdb_floating
+show_camdb_floating()
       ]]>
     </script>
   </tool>

@@ -19,25 +19,25 @@ show_light_converter()
       ]]></script>
   </tool>
 
-  <tool name="massMerger" label="Mass Merger" icon="hicon:/SVGIcons.index?BUTTONS_merge.svg">
+  <tool name="massMerger" label="Mass Merger" icon="hicon:/SVGIcons.index?BUTTONS_create_objects.svg">
     <script scriptType="python"><![CDATA[from byvfx.utils.mass_merger import merge_selected_nodes
 merge_selected_nodes()
       ]]></script>
   </tool>
 
-  <tool name="vexSnippetManager" label="VEX Snippets" icon="hicon:/SVGIcons.index?BUTTONS_script.svg">
+  <tool name="vexSnippetManager" label="VEX Snippets" icon="hicon:/SVGIcons.index?BUTTONS_cook2.svg">
     <script scriptType="python"><![CDATA[from byvfx.utils.vex_snippet_manager import show_vex_snippet_manager
 show_vex_snippet_manager()
       ]]></script>
   </tool>
 
-  <tool name="camDB" label="Camera DB" icon="hicon:/SVGIcons.index?BUTTONS_camera.svg">
+  <tool name="camDB" label="Camera DB" icon="hicon:/SVGIcons.index?BUTTONS_capture.svg">
     <script scriptType="python"><![CDATA[from byvfx.utils.camDB import show_camdb_floating
 show_camdb_floating()
       ]]></script>
   </tool>
 
-  <tool name="multiImport" label="Multi Import" icon="hicon:/SVGIcons.index?BUTTONS_import.svg">
+  <tool name="multiImport" label="Multi Import" icon="hicon:/SVGIcons.index?BUTTONS_clone.svg">
     <script scriptType="python"><![CDATA[from byvfx.utils.multi_import import show_multi_import
 show_multi_import()
       ]]></script>

@@ -5,22 +5,25 @@ def show_multi_import():
     """Show the multi-import dialog and create geometry setup."""
     # === UI: Ask user to select multiple files ===
     selected_files = hou.ui.selectFile(
-        start_directory="",
-        title="Select Geometry Files (.bgeo, .vdb)",
+        start_directory="$HIP",
+        title="Select Files",
         collapse_sequences=False,
         multiple_select=True,
-        file_type=hou.fileType.Any
+        file_type=hou.fileType.Geometry,
+        pattern="*.bgeo *.vdb,*.obj,*.fbx",
+
     )
 
     # Early exit if user cancels
     if not selected_files:
-        raise hou.UserWarning("No files selected.")
+        hou.ui.displayMessage("No files selected.", severity=hou.severityType.Message)
+        return
 
     # Sanitize and normalize paths (Windows fix)
     file_list = [f.strip().replace("\\", "/") for f in selected_files.split(";")]
 
     # === Create GEO container ===
-    geo_node = hou.node("/obj").createNode("geo", "geo_import_switch", run_init_scripts=False)
+    geo_node = hou.node("/obj").createNode("geo", "multi_import", run_init_scripts=False)
     geo_node.moveToGoodPosition()
 
     # Clear default file node

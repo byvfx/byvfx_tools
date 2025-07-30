@@ -10,6 +10,7 @@
     <memberTool name="massMerger"/>
     <memberTool name="vexSnippetManager"/>
     <memberTool name="camDB"/>
+    <memberTool name="multiImport"/>
   </toolshelf>
 
   <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
@@ -44,6 +45,14 @@ show_vex_snippet_manager()
       <![CDATA[
 from byvfx.utils.camDB import show_camdb_floating
 show_camdb_floating()
+      ]]>
+    </script>
+  </tool>
+
+  <tool name="multiImport" label="Multi Import" icon="hicon:/SVGIcons.index?BUTTONS_import.svg">
+    <script scriptType="python">
+      <![CDATA[
+exec(open(r"e:\_houdiniFiles\BY_python\byvfx_tools\python3.11libs\byvfx\utils\multi_import.py").read())
       ]]>
     </script>
   </tool>

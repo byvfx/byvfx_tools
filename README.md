@@ -1,9 +1,6 @@
-# This toolset is not done and is very WIP. its missing a lot of things currently
+# BYVFX Tools
 
-<div align="center">
-  <h1>BYVFX Tools</h1>
-</div>
-
+A collection of production utilities designed to streamline Houdini workflows.
 
 <div align="center">
 
@@ -13,120 +10,71 @@
 
 </div>
 
-## Overview
+## Core Features
 
-### BYVFX Tools is a collection of utilities designed to streamline FX/CG workflows
+### Shelf Tools
 
-## ⚡ Core Features
+**Light Converter** - Convert between different light types with parameter mapping
+**Mass Merger** - Merge selected nodes into a single merge node with container options
+**VEX Snippet Manager** - Organize and manage VEX code snippets with categories and search
+**Camera DB** - Browse and create cameras from the CamDB database with proper sensor settings
+**Multi Import** - Import multiple geometry files with automatic switch setup
 
-Pre-Built Simulation Caches
-Our extensive library of pre-built caches saves valuable simulation time and ensures consistent, high-quality results.
+### Geometry Utilities
 
-### Geometry Caches
+**ABC Splitter** - Split Alembic files by path sections with UI selection
+**Material Splitter** - Split geometry by material paths into separate blast nodes
+**Animated Node Highlighter** - Color nodes with keyframes for visual identification
 
-Debris Library: Highly detailed, physically accurate debris including rocks, paper, metal pieces, glass, and vegetation
-Electrical Effects: Ready-to-use electrical animation caches for quick implementation
-Production-Ready: All caches are optimized for production use with clean topology and efficient file sizes
+### File Management
 
-### VDB Caches
+**File Cache Manager** - Manage and edit file cache node paths with grouping system
+**Texture Converters** - Arnold and Redshift texture conversion tools with GUI interfaces
 
-Fire Effects: Realistic fire simulations for various scenarios
-Smoke Collection: Comprehensive range from subtle dust hits to massive smoke plumes
-Explosion Library: Ready-to-use explosion caches for immediate integration
+### Solaris Integration
 
-### Interactive Tools (HDAs)
+**Solaris to OBJ** - Convert Solaris scenes to traditional OBJ networks with material and light translation
+**Multi-Renderer Support** - Handle Mantra/Karma, Arnold, and Redshift workflows
 
-Powerful Houdini Digital Assets are designed for artist-friendly workflow enhancement.
-Effects Generation
+## Installation
 
-Spark & Smoke Tool: Interactive spark and smoke generation with frame-specific control
-Lightning & Electrical: Dynamic electrical effect generation system
-Volume Particle Tool: Advanced particle system (Afterburn clone)
-Wind Generator: Professional-grade vector field generation for pyro effects
-Liquid Hit Tool: Fluid simulation setup with artist-friendly controls
+BYVFX Tools uses Houdini's package management system.
 
-### Production Utilities
-
-Camera Setup: Automated camera creation with plate integration and resolution matching
-Projection Tool: Sophisticated multilayered material projection system
-VEX Snippet Manager: Efficient code management system for VEX snippets
-
-### Utility Tools
-
-Workflow enhancers designed to speed up common production tasks.
-
-ABC Splitter: Right-click functionality for efficient Alembic file management
-Animation Node Highlighter: Visual identification system for animated SOP nodes
-Geometry Splitter: Advanced splitting tools for ABCs and geometry based on attributes
-
-Gallery FX Setups
-Comprehensive collection of production-ready effect setups and examples.
-Ready-to-Use Setups
-
-RBD Examples: Practical setups including bending metal and constraint networks
-PYRO Configurations: Production-optimized Pyro setups with multiple disturb and turbulence fields
-Simulation Samples: Curated examples for Vellum, POP, and MPM simulations
-
-## 🚀 Upcoming Features
-
-- Arnold support for the light converter
-- Vray support for the light converter
-- Octane support for the light converter
-- Comprehensive video demonstrations
-- Extended documentation and usage examples
-
-# 📦 Installation
-
-BYVFX Tools uses Houdini's package management system for seamless integration into your pipeline. The package system ensures that all tools, HDAs, and resources are properly organized and loaded in your Houdini environment.
-
-## Using Houdini Packages
-
-1. Create a `packages` directory in your Houdini preferences if it doesn't exist:
+1. Create a `packages` directory in your Houdini preferences:
 
 ```bash
 # Windows
 %USERPROFILE%/Documents/HOUDINIVERSION/packages
 
-# Linux
+# Linux  
 ~/HOUDINIVERSION/packages
 
 # macOS
 ~/Library/Preferences/houdini/HOUDINIVERSION/packages
 ```
 
-1. Download the BYVFX Tools package and extract it to a location of your choice:
-
-2. Create a new JSON file named `BYVFX.json` in your packages directory with the following content or use the one provided:
+2. Create `BYVFX.json` in your packages directory:
 
 ```json
 {
-    "enable" : true,
-    "env": 
-    
-       [ {"HOUDINI_PATH" : "E:\\_houdiniFiles\\BY_python\\byvfx_tools"}]
-
+    "enable": true,
+    "env": [
+        {"HOUDINI_PATH": "PATH_TO_BYVFX_TOOLS"}
+    ]
 }
 ```
 
 3. Restart Houdini to load the package
 
-### Troubleshooting
+## Usage
 
-If you encounter any issues:
+Tools are accessible through:
+- BYVFX Tools shelf
+- Python shell imports from `byvfx.utils` and `byvfx.tools`
+- Individual script execution from the scripts directory
 
-1. Verify your `HOUDINI_PATH` includes the package directory
-2. Check that all environment variables are properly set
-3. Ensure file permissions are correct
-4. Restart Houdini after making changes
-
-For additional help, contact [brandon@byvfx.com](mailto:brandon@byvfx.com)
-
-## 📬 Contact & Support
+## Contact
 
 - Email: [brandon@byvfx.com](mailto:brandon@byvfx.com)
 - Website: [byvfx.com](https://byvfx.com)
 - LinkedIn: [Connect with me](https://linkedin.com/brandoncyoung)
-
----
-
-If you find BYVFX Tools helpful, please consider starring this repository. Your support helps us continue development! ⭐

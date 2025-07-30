@@ -304,15 +304,16 @@ class VEXSnippetManagerUI(QtWidgets.QDialog):
         self.tree.clear()
         
         for category in self.manager.categories:
+            # Create category item regardless of whether it has snippets
+            category_item = QtWidgets.QTreeWidgetItem(self.tree, [category])
+            category_item.setData(0, QtCore.Qt.UserRole, ("category", category))
+            
+            # Add snippets if the category exists in snippets_data
             if category in self.manager.snippets_data:
                 snippets = self.manager.snippets_data[category]
-                if snippets:  # Only show categories that have snippets
-                    category_item = QtWidgets.QTreeWidgetItem(self.tree, [category])
-                    category_item.setData(0, QtCore.Qt.UserRole, ("category", category))
-                    
-                    for snippet_name in sorted(snippets.keys()):
-                        snippet_item = QtWidgets.QTreeWidgetItem(category_item, [snippet_name])
-                        snippet_item.setData(0, QtCore.Qt.UserRole, ("snippet", category, snippet_name))
+                for snippet_name in sorted(snippets.keys()):
+                    snippet_item = QtWidgets.QTreeWidgetItem(category_item, [snippet_name])
+                    snippet_item.setData(0, QtCore.Qt.UserRole, ("snippet", category, snippet_name))
         
         self.tree.expandAll()
     
@@ -420,7 +421,11 @@ class VEXSnippetManagerUI(QtWidgets.QDialog):
         if ok and text.strip():
             if text not in self.manager.categories:
                 self.manager.categories.append(text)
+                # Initialize empty category in snippets_data
+                if text not in self.manager.snippets_data:
+                    self.manager.snippets_data[text] = {}
                 self.manager.save_snippets()
+                self.populate_tree()  # Refresh the tree to show new category
                 self.status_label.setText(f"Category '{text}' added!")
                 QtCore.QTimer.singleShot(2000, lambda: self.status_label.setText("Ready"))
             else:

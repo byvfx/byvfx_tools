@@ -1,4 +1,12 @@
-#TODO - add grouping for nodes and  collaspable groups and color coding for grou
+"""
+File Cache Manager - Advanced node management tool with grouping and color coding.
+
+Features:
+- Group file cache nodes for better organization
+- Color-coded groups for visual identification
+- Context menu for node operations
+- Persistent storage of group configurations
+"""
 
 from PySide2 import QtWidgets, QtCore, QtGui
 import hou
@@ -7,10 +15,28 @@ import json
 get_houdini_path = hou.getenv("HOUDINI_USER_PREF_DIR")
 json_file_path = get_houdini_path + "/scripts/groups_data.json"
 def get_filecache_nodes():
+    """
+    Get all file cache nodes in the scene with improved performance.
+    Uses nodeTypeFilter for better performance than allSubChildren().
+    """
     filecache_nodes = []
-    for node in hou.node("/").allSubChildren():
-        if node.type().name().startswith("filecache"):
-            filecache_nodes.append(node)
+    
+    # More efficient search using specific node types
+    for node_type in ["filecache", "filecache::2.0"]:
+        try:
+            nodes = hou.nodeType(hou.sopNodeTypeCategory(), node_type)
+            if nodes:
+                filecache_nodes.extend(nodes.instances())
+        except hou.OperationFailed:
+            # Node type doesn't exist in this Houdini version
+            continue
+    
+    # Fallback to old method if no nodes found
+    if not filecache_nodes:
+        for node in hou.node("/").allSubChildren():
+            if node.type().name().startswith("filecache"):
+                filecache_nodes.append(node)
+    
     return filecache_nodes
 
 class FileCacheNodeEditor(QtWidgets.QWidget):

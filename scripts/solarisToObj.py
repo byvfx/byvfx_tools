@@ -1,4 +1,44 @@
+"""
+Solaris to OBJ Converter
+
+Converts Solaris/LOP scenes to traditional OBJ networks with proper
+material and light translation for multiple render engines.
+
+Features:
+- Multi-renderer support (Mantra/Karma, Arnold, Redshift)
+- Automatic material conversion
+- Light parameter mapping
+- Camera setup preservation
+"""
+
 import hou
+from typing import Optional, List, Dict, Any
+
+# Type mapping constants for better maintainability
+RENDER_ENGINES = {
+    0: 'karma',
+    1: 'arnold', 
+    2: 'redshift',
+    3: 'default'
+}
+
+LIGHT_TYPE_MAPPING = {
+    '0': 'cyl',
+    '1': 'dist', 
+    '2': 'disk',
+    '3': 'point',
+    '4': 'rect',
+    '5': 'sphere'
+}
+
+OBJ_LIGHT_TYPE_MAPPING = {
+    'cyl': '5/5/3',
+    'dist': '7/1/0', 
+    'disk': '3/4/3',
+    'point': '0/0/1',
+    'rect': '2/3/3',
+    'sphere': '4/0/3'
+}
 
 def cleanSubnet(Container,collectONLY=0):
         if collectONLY == 0:
@@ -19,33 +59,38 @@ def createNodeIfNonExistant(geoParent,geoType,geoName,setInputTo=''):
                 checkExists.moveToGoodPosition(True)
 
         return checkExists
-def valueTypeConvert(parameter,customVal,customValParam):
-        pType = str(type(parameter.eval()))
-        # print("valueTypeConvert: ")
-        # print("pType: "+str(pType))
-        # print("customVal: "+str(customVal))
-        cPType = str(type(customValParam.eval()))
-        # print("cPType: "+str(cPType))
-        if pType != cPType:
-                # print("pType != cPType")
-                parameterValue = 'NONE'
-                # print("parameterValue: "+str(parameterValue))
-                return parameterValue
-        if pType == cPType:
-                # print("pType == cPType")
-                parameterValue = 0
-                if pType == "<class 'float'>":
-                        parameterValue = float(customVal)
-                        # print("parameterValue: "+str(parameterValue))
-                        return parameterValue
-                if pType == "<class 'str'>":
-                        parameterValue = str(customVal)
-                        # print("parameterValue: "+str(parameterValue))
-                        return parameterValue
-                if pType == "<class 'int'>":
-                        parameterValue = int(customVal)
-                        # print("parameterValue: "+str(parameterValue))
-                        return parameterValue
+def valueTypeConvert(parameter, customVal, customValParam):
+    """
+    Convert parameter values between different types safely.
+    
+    Args:
+        parameter: Target parameter to set
+        customVal: Value to convert 
+        customValParam: Source parameter for type reference
+        
+    Returns:
+        Converted value or 'NONE' if conversion fails
+    """
+    try:
+        source_type = type(parameter.eval())
+        target_type = type(customValParam.eval())
+        
+        # If types don't match, return None to indicate failure
+        if source_type != target_type:
+            return 'NONE'
+            
+        # Convert based on type
+        if isinstance(customVal, float):
+            return float(customVal)
+        elif isinstance(customVal, str):
+            return str(customVal)
+        elif isinstance(customVal, int):
+            return int(customVal)
+        else:
+            return customVal
+            
+    except (ValueError, TypeError, AttributeError):
+        return 'NONE'
 def swapParameterName(incomingName,compareName,setName):
         incomingNameVal = str(incomingName)
         if incomingNameVal == compareName:

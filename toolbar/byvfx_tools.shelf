@@ -1,16 +1,4 @@
-<?xml version="  <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
-    <script scriptType="python"><![CDATA[import sys
-import os
-
-# Add the byvfx_tools path to Python path if not already there
-tools_path = r"e:\_houdiniFiles\BY_python\byvfx_tools\python3.11libs"
-if tools_path not in sys.path:
-    sys.path.insert(0, tools_path)
-
-from byvfx.tools.light_converter import show_light_converter
-show_light_converter()
-      ]]></script>
-  </tool>="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <shelfDocument>
   <!-- This file contains definitions of shelves, toolbars, and tools.
  It should not be hand-edited when it is being used by the application.
@@ -26,64 +14,32 @@ show_light_converter()
   </toolshelf>
 
   <tool name="lightConverter" label="Light Converter" icon="hicon:/SVGIcons.index?BUTTONS_add_light_collection.svg">
-    <script scriptType="python"><![CDATA[import sys
-import os
-
-# Add the tools path to Python path if not already there
-tools_path = os.path.join(hou.getenv("HOUDINI_USER_PREF_DIR"), "..", "byvfx_tools", "python3.11libs")
-if tools_path not in sys.path:
-    sys.path.insert(0, tools_path)
-
-from byvfx.tools.light_converter import show_light_converter
+    <script scriptType="python"><![CDATA[from byvfx.tools.light_converter import show_light_converter
 show_light_converter()
       ]]></script>
   </tool>
 
   <tool name="massMerger" label="Mass Merger" icon="hicon:/SVGIcons.index?BUTTONS_merge.svg">
-    <script scriptType="python"><![CDATA[import sys
-import os
-
-# Add the byvfx_tools path to Python path if not already there
-tools_path = r"e:\_houdiniFiles\BY_python\byvfx_tools\python3.11libs"
-if tools_path not in sys.path:
-    sys.path.insert(0, tools_path)
-
-from byvfx.utils.mass_merger import merge_selected_nodes
+    <script scriptType="python"><![CDATA[from byvfx.utils.mass_merger import merge_selected_nodes
 merge_selected_nodes()
       ]]></script>
   </tool>
 
   <tool name="vexSnippetManager" label="VEX Snippets" icon="hicon:/SVGIcons.index?BUTTONS_script.svg">
-    <script scriptType="python"><![CDATA[import sys
-import os
-
-# Add the byvfx_tools path to Python path if not already there
-tools_path = r"e:\_houdiniFiles\BY_python\byvfx_tools\python3.11libs"
-if tools_path not in sys.path:
-    sys.path.insert(0, tools_path)
-
-from byvfx.utils.vex_snippet_manager import show_vex_snippet_manager
+    <script scriptType="python"><![CDATA[from byvfx.utils.vex_snippet_manager import show_vex_snippet_manager
 show_vex_snippet_manager()
       ]]></script>
   </tool>
 
   <tool name="camDB" label="Camera DB" icon="hicon:/SVGIcons.index?BUTTONS_camera.svg">
-    <script scriptType="python"><![CDATA[import sys
-import os
-
-# Add the byvfx_tools path to Python path if not already there
-tools_path = r"e:\_houdiniFiles\BY_python\byvfx_tools\python3.11libs"
-if tools_path not in sys.path:
-    sys.path.insert(0, tools_path)
-
-from byvfx.utils.camDB import show_camdb_floating
+    <script scriptType="python"><![CDATA[from byvfx.utils.camDB import show_camdb_floating
 show_camdb_floating()
       ]]></script>
   </tool>
 
   <tool name="multiImport" label="Multi Import" icon="hicon:/SVGIcons.index?BUTTONS_import.svg">
-    <script scriptType="python"><![CDATA[
-exec(open(r"e:\_houdiniFiles\BY_python\byvfx_tools\python3.11libs\byvfx\utils\multi_import.py").read())
+    <script scriptType="python"><![CDATA[from byvfx.utils.multi_import import show_multi_import
+show_multi_import()
       ]]></script>
   </tool>
 </shelfDocument>

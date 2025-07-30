@@ -179,6 +179,21 @@ class VEXSnippetManager:
                     results.append((category, name, data))
         
         return results
+    
+    def delete_category(self, category: str) -> bool:
+        """Delete an entire category and all its snippets."""
+        try:
+            if category in self.snippets_data:
+                del self.snippets_data[category]
+            
+            if category in self.categories:
+                self.categories.remove(category)
+            
+            self.save_snippets()
+            return True
+        except Exception as e:
+            print(f"Error deleting category: {e}")
+        return False
 
 
 class VEXSnippetManagerUI(QtWidgets.QDialog):
@@ -229,15 +244,27 @@ class VEXSnippetManagerUI(QtWidgets.QDialog):
         left_panel.addWidget(self.tree)
         
         # Buttons
-        button_layout = QtWidgets.QHBoxLayout()
+        button_layout = QtWidgets.QGridLayout()
         
+        # Add buttons (first row)
         self.add_btn = QtWidgets.QPushButton("Add Snippet")
         self.add_btn.clicked.connect(self.add_snippet)
-        button_layout.addWidget(self.add_btn)
+        button_layout.addWidget(self.add_btn, 0, 0)
         
         self.add_category_btn = QtWidgets.QPushButton("Add Category")
         self.add_category_btn.clicked.connect(self.add_category)
-        button_layout.addWidget(self.add_category_btn)
+        button_layout.addWidget(self.add_category_btn, 0, 1)
+        
+        # Remove buttons (second row)
+        self.remove_snippet_btn = QtWidgets.QPushButton("Remove Snippet")
+        self.remove_snippet_btn.clicked.connect(self.remove_snippet)
+        self.remove_snippet_btn.setEnabled(False)
+        button_layout.addWidget(self.remove_snippet_btn, 1, 0)
+        
+        self.remove_category_btn = QtWidgets.QPushButton("Remove Category")
+        self.remove_category_btn.clicked.connect(self.remove_category)
+        self.remove_category_btn.setEnabled(False)
+        button_layout.addWidget(self.remove_category_btn, 1, 1)
         
         left_panel.addLayout(button_layout)
         
@@ -333,9 +360,18 @@ class VEXSnippetManagerUI(QtWidgets.QDialog):
                 
                 self.copy_btn.setEnabled(True)
                 self.edit_btn.setEnabled(True)
+                self.remove_snippet_btn.setEnabled(True)
+                self.remove_category_btn.setEnabled(True)
                 
                 self.current_category = category
                 self.current_snippet = name
+        elif data and data[0] == "category":
+            _, category = data
+            # Category selected - enable category removal, disable snippet operations
+            self.clear_selection()
+            self.remove_category_btn.setEnabled(True)
+            self.current_category = category
+            self.current_snippet = None
         else:
             self.clear_selection()
     
@@ -347,7 +383,10 @@ class VEXSnippetManagerUI(QtWidgets.QDialog):
         self.code_editor.setPlainText("")
         self.copy_btn.setEnabled(False)
         self.edit_btn.setEnabled(False)
+        self.remove_snippet_btn.setEnabled(False)
+        self.remove_category_btn.setEnabled(False)
         self.current_category = None
+        self.current_snippet = None
         self.current_snippet = None
     
     def copy_to_clipboard(self) -> None:
@@ -431,6 +470,72 @@ class VEXSnippetManagerUI(QtWidgets.QDialog):
             else:
                 QtWidgets.QMessageBox.warning(
                     self, "Warning", f"Category '{text}' already exists!"
+                )
+    
+    def remove_snippet(self) -> None:
+        """Remove the currently selected snippet with confirmation."""
+        if not hasattr(self, 'current_category') or not hasattr(self, 'current_snippet'):
+            return
+        
+        if not self.current_category or not self.current_snippet:
+            QtWidgets.QMessageBox.warning(
+                self, "Warning", "Please select a snippet to remove."
+            )
+            return
+        
+        # Confirmation dialog
+        reply = QtWidgets.QMessageBox.question(
+            self, "Confirm Removal", 
+            f"Are you sure you want to remove the snippet '{self.current_snippet}' from category '{self.current_category}'?\n\nThis action cannot be undone.",
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            QtWidgets.QMessageBox.No
+        )
+        
+        if reply == QtWidgets.QMessageBox.Yes:
+            if self.manager.delete_snippet(self.current_category, self.current_snippet):
+                self.populate_tree()
+                self.clear_selection()
+                self.status_label.setText(f"Snippet '{self.current_snippet}' removed!")
+                QtCore.QTimer.singleShot(2000, lambda: self.status_label.setText("Ready"))
+            else:
+                QtWidgets.QMessageBox.critical(
+                    self, "Error", "Failed to remove snippet."
+                )
+    
+    def remove_category(self) -> None:
+        """Remove the currently selected category with confirmation."""
+        if not hasattr(self, 'current_category') or not self.current_category:
+            QtWidgets.QMessageBox.warning(
+                self, "Warning", "Please select a category to remove."
+            )
+            return
+        
+        # Count snippets in category
+        snippet_count = 0
+        if self.current_category in self.manager.snippets_data:
+            snippet_count = len(self.manager.snippets_data[self.current_category])
+        
+        # Confirmation dialog with snippet count
+        if snippet_count > 0:
+            message = f"Are you sure you want to remove the category '{self.current_category}' and all {snippet_count} snippets in it?\n\nThis action cannot be undone."
+        else:
+            message = f"Are you sure you want to remove the empty category '{self.current_category}'?\n\nThis action cannot be undone."
+        
+        reply = QtWidgets.QMessageBox.question(
+            self, "Confirm Removal", message,
+            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            QtWidgets.QMessageBox.No
+        )
+        
+        if reply == QtWidgets.QMessageBox.Yes:
+            if self.manager.delete_category(self.current_category):
+                self.populate_tree()
+                self.clear_selection()
+                self.status_label.setText(f"Category '{self.current_category}' removed!")
+                QtCore.QTimer.singleShot(2000, lambda: self.status_label.setText("Ready"))
+            else:
+                QtWidgets.QMessageBox.critical(
+                    self, "Error", "Failed to remove category."
                 )
     
     def edit_snippet(self) -> None:

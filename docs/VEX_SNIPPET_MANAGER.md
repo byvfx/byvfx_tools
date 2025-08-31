@@ -1,109 +1,85 @@
 # VEX Snippet Manager
 
-A comprehensive utility for managing and organizing VEX code snippets in Houdini.
+A utility for managing and organizing VEX code snippets in Houdini.
 
 ## Features
 
-- **Organized Categories**: Store snippets in predefined or custom categories
-- **Search Functionality**: Quickly find snippets by name, description, or tags
-- **Rich Metadata**: Add descriptions and tags to snippets for better organization
-- **Easy Access**: Copy snippets to clipboard with one click
-- **Edit/Delete**: Modify or remove snippets as needed
-- **Persistent Storage**: Snippets are saved in your Houdini user preferences
+- Organized categories and tags
+- Search by name, description, or tags
+- Copy to clipboard, edit, and delete
+- Persistent storage under your BYVFX package path
 
 ## Default Categories
 
-The VEX Snippet Manager comes with the following predefined categories:
+- Attributes — Point, primitive, and vertex attribute manipulation
+- Noise Functions — Various noise and turbulence patterns
+- Math/Utility — Mathematical operations and utility functions
+- Geometry Processing — Geometry manipulation and analysis
+- Color/Shading — Color and material related code
+- Animation/Time — Time-based and animation effects
+- Particles — Particle system related code
+- Volumes — Volume manipulation and processing
+- Custom — User-defined snippets
+- Uncategorized — Default category for unclassified snippets
 
-- **Attributes** - Point, primitive, and vertex attribute manipulation
-- **Noise Functions** - Various noise and turbulence patterns
-- **Math/Utility** - Mathematical operations and utility functions
-- **Geometry Processing** - Geometry manipulation and analysis
-- **Color/Shading** - Color and material related code
-- **Animation/Time** - Time-based and animation effects
-- **Particles** - Particle system related code
-- **Volumes** - Volume manipulation and processing
-- **Custom** - User-defined snippets
-- **Uncategorized** - Default category for unclassified snippets
+## File Location
+
+Snippets are stored at:
+
+```text
+$BYVFX/scripts/vex_snippets.json
+```
+
+If BYVFX is not defined (package not loaded), it falls back to:
+
+```text
+$HOUDINI_USER_PREF_DIR/scripts/vex_snippets.json
+```
 
 ## Usage
 
-### Launching the VEX Snippet Manager
+### Launching the Manager
 
-#### From Shelf Tool
-1. Add the BYVFX Tools shelf to your Houdini interface
-2. Click the "VEX Snippets" tool
+- From Shelf Tool: Click "VEX Snippets" on the BYVFX Tools shelf
+- From Python Shell:
 
-#### From Python Shell
 ```python
 from byvfx.utils.vex_snippet_manager import show_vex_snippet_manager
 show_vex_snippet_manager()
 ```
 
-#### From Script
-Run the launcher script:
+- From Script:
+
 ```python
 exec(open(r"e:\_houdiniFiles\BY_python\byvfx_tools\scripts\launch_vex_snippet_manager.py").read())
 ```
 
 ### Adding Snippets
 
-1. Click "Add Snippet" button
-2. Select or create a category
-3. Enter a descriptive name
-4. Add a description (optional but recommended)
-5. Enter comma-separated tags for easier searching
-6. Paste or type your VEX code
-7. Click "OK" to save
+1. Click "Add Snippet"
+2. Choose or create a category
+3. Name it, add a description and tags
+4. Paste or type your VEX code
+5. Click "OK"
 
 ### Managing Snippets
 
-- **Search**: Use the search bar to find snippets by name, description, or tags
-- **Copy**: Select a snippet and click "Copy to Clipboard"
-- **Edit**: Right-click a snippet and select "Edit" or use the "Edit Snippet" button
-- **Delete**: Right-click a snippet and select "Delete"
-
-### Categories
-
-- **Add Category**: Click "Add Category" to create new categories
-- **Custom Categories**: Type a new category name when adding snippets
-
-## Example Snippets Included
-
-The manager comes with several example snippets to get you started:
-
-### Attributes
-- Random Color per Point
-- Scale by Point Number
-
-### Noise Functions  
-- Turbulent Position
-- Animated Noise
-
-### Math/Utility
-- Distance from Origin
-- Remap Values
-
-## File Location
-
-Snippets are stored in:
-```
-$HOUDINI_USER_PREF_DIR/scripts/vex_snippets.json
-```
+- Search using the search bar
+- Copy with "Copy to Clipboard"
+- Edit via right-click or the "Edit Snippet" button
+- Delete via right-click
 
 ## Data Structure
 
-Snippets are stored in JSON format with the following structure:
-
 ```json
 {
-  "categories": ["Attributes", "Noise Functions", ...],
+  "categories": ["Attributes", "Noise Functions", "..."],
   "snippets": {
     "category_name": {
       "snippet_name": {
         "code": "VEX code here",
-        "description": "Description of what the code does",
-        "tags": ["tag1", "tag2", "tag3"]
+        "description": "What it does",
+        "tags": ["tag1", "tag2"]
       }
     }
   }
@@ -111,6 +87,27 @@ Snippets are stored in JSON format with the following structure:
 ```
 
 ## Programmatic Usage
+
+```python
+from byvfx.utils.vex_snippet_manager import VEXSnippetManager, quick_add_snippet
+
+manager = VEXSnippetManager()
+quick_add_snippet(
+    category="Custom",
+    name="My Snippet",
+    code="@P.y += sin(@Time) * 0.1;",
+    description="Animated vertical wave",
+    tags=["animation", "sine", "wave"]
+)
+```
+
+## Troubleshooting Guide
+
+- Ensure the byvfx_tools package is in your Python path
+- Verify PySide2 is available in Houdini
+- Check write permissions to the destination folder
+
+ 
 
 You can also manage snippets programmatically:
 

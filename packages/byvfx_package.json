@@ -1,7 +1,19 @@
 {
-    "enable" : true,
-    "env": 
-    
-       [ {"HOUDINI_PATH" : "E:\\_houdiniFiles\\BY_python\\byvfx_tools"}]
-
+    "name": "BYVFX",
+    "load_package_once": true,
+    "enable": true,
+    "env": [
+        {
+            "BYVFX": "$HOUDINI_PACKAGE_DIR/.."
+        },
+        {
+            "HOUDINI_OTLSCAN_PATH": "$BYVFX/otls;&"
+        },
+        {
+            "PYTHONPATH": "$BYVFX/python3.11libs;&"
+        }
+    ],
+    "path": [
+        "$BYVFX"
+    ]
 }

@@ -12,6 +12,9 @@ A collection of production utilities designed to streamline Houdini workflows.
 
 ## Core Features
 
+### HDAS
+**Draw Points** - draw single point positions in 3D space with customizable markers
+
 ### Shelf Tools
 
 **Light Converter** - Convert between different light types with parameter mapping
@@ -38,37 +41,58 @@ A collection of production utilities designed to streamline Houdini workflows.
 
 ## Installation
 
-BYVFX Tools uses Houdini's package management system.
+BYVFX Tools uses Houdini's package system. Choose one of the options below.
 
-1. Create a `packages` directory in your Houdini preferences:
+### Option A — Point Houdini to this repo's `packages` folder (recommended)
 
-```bash
-# Windows
-%USERPROFILE%/Documents/HOUDINIVERSION/packages
+1) Place/clone this repo anywhere (e.g. `E:\yourDirectory\byvfx_tools`).
 
-# Linux  
-~/HOUDINIVERSION/packages
+2) Add the repo's `packages` folder to Houdini's package search path.
 
-# macOS
-~/Library/Preferences/houdini/HOUDINIVERSION/packages
-```
+3) Restart Houdini. The included `packages/byvfx_package.json` will set:
 
-2. Create `BYVFX.json` in your packages directory:
+- BYVFX to the repo root
+- HOUDINI_OTLSCAN_PATH to `$BYVFX/otls` (preserving existing with `;&`)
+- PYTHONPATH to `$BYVFX/python3.11libs` (preserving existing with `;&`)
+
+### Option B — Copy a package file into your user packages folder
+
+1) Copy `packages/byvfx_package.json` into your user packages directory:
+
+- Windows: `%USERPROFILE%\Documents\Houdini<version>\packages`
+- Linux: `~/Houdini<version>/packages`
+- macOS: `~/Library/Preferences/houdini/<version>/packages`
+
+1) Edit the copied `byvfx_package.json` so the `BYVFX` env points to your repo path, for example:
 
 ```json
 {
-    "enable": true,
-    "env": [
-        {"HOUDINI_PATH": "PATH_TO_BYVFX_TOOLS"}
-    ]
+	"enable": true,
+	"load_package_once": true,
+	"env": [
+		{ "BYVFX": "E:/_houdiniFiles/BY_python/byvfx_tools" },
+		{ "HOUDINI_OTLSCAN_PATH": "$BYVFX/otls;&" },
+		{ "PYTHONPATH": "$BYVFX/python3.11libs;&" }
+	],
+	"path": ["$BYVFX"]
 }
 ```
 
-3. Restart Houdini to load the package
+1) Restart Houdini.
+
+### Verify
+
+In Houdini Python Shell:
+
+```python
+import hou
+print(hou.expandString("$BYVFX"))  # should print your repo path
+```
 
 ## Usage
 
 Tools are accessible through:
+
 - BYVFX Tools shelf
 - Python shell imports from `byvfx.utils` and `byvfx.tools`
 - Individual script execution from the scripts directory

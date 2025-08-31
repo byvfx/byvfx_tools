@@ -11,9 +11,14 @@ Features:
 from PySide2 import QtWidgets, QtCore, QtGui
 import hou
 import json
+import os
 
-get_houdini_path = hou.getenv("HOUDINI_USER_PREF_DIR")
-json_file_path = get_houdini_path + "/scripts/groups_data.json"
+# Store persistent data under $BYVFX/scripts when available, fallback to user prefs
+_byvfx_root = hou.expandString("$BYVFX") or hou.getenv("BYVFX")
+if not _byvfx_root or _byvfx_root == "$BYVFX":
+    _byvfx_root = hou.getenv("HOUDINI_USER_PREF_DIR")
+
+json_file_path = os.path.join(_byvfx_root, "scripts", "groups_data.json")
 def get_filecache_nodes():
     """
     Get all file cache nodes in the scene with improved performance.
@@ -74,6 +79,8 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
 
 
     def save_groups_to_json(self, json_file_path=json_file_path):
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
         with open(json_file_path, 'w') as file:
             json.dump({"nodes": self.data_model, "colors": self.group_colors}, file, indent=4)
 
@@ -133,8 +140,8 @@ class FileCacheNodeEditor(QtWidgets.QWidget):
 
         if action == focus_node_action:
             self.focus_on_selected_node()
-       # elif action == change_group_color_action:
-            #change_group_color(self, item)
+        elif action == change_group_color_action:
+            self.change_group_color(item)
         elif action == create_group_action:
             self.create_group()
         elif action == add_to_group_action:

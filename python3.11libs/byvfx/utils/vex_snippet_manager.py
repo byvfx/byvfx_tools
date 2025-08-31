@@ -14,8 +14,13 @@ from typing import Dict, List, Optional, Tuple
 from PySide2 import QtWidgets, QtCore, QtGui
 
 # Constants
-HOUDINI_USER_PATH = hou.getenv("HOUDINI_USER_PREF_DIR")
-VEX_SNIPPETS_FILE = os.path.join(HOUDINI_USER_PATH, "scripts", "vex_snippets.json")
+# Prefer storing under $BYVFX/scripts; fallback to Houdini user prefs if BYVFX is unavailable
+BYVFX_ROOT = hou.expandString("$BYVFX") or hou.getenv("BYVFX")
+if not BYVFX_ROOT or BYVFX_ROOT == "$BYVFX":
+    BYVFX_ROOT = hou.getenv("HOUDINI_USER_PREF_DIR")
+
+VEX_SNIPPETS_FILE = os.path.join(BYVFX_ROOT, "scripts", "vex_snippets.json")
+OLD_SNIPPETS_FILE = os.path.join(hou.getenv("HOUDINI_USER_PREF_DIR"), "scripts", "vex_snippets.json")
 
 class VEXSnippetManager:
     """Core class for managing VEX snippets data."""
@@ -28,6 +33,16 @@ class VEXSnippetManager:
     def load_snippets(self) -> None:
         """Load snippets from JSON file."""
         try:
+            # Migrate from old location if needed
+            if not os.path.exists(VEX_SNIPPETS_FILE) and os.path.exists(OLD_SNIPPETS_FILE):
+                with open(OLD_SNIPPETS_FILE, 'r') as file:
+                    data = json.load(file)
+                    self.snippets_data = data.get("snippets", {})
+                    self.categories = data.get("categories", self._get_default_categories())
+                    # Save to new location
+                    self.save_snippets()
+                    return
+
             if os.path.exists(VEX_SNIPPETS_FILE):
                 with open(VEX_SNIPPETS_FILE, 'r') as file:
                     data = json.load(file)
@@ -207,7 +222,7 @@ class VEXSnippetManagerUI(QtWidgets.QDialog):
         
     def setup_ui(self) -> None:
         """Setup the user interface."""
-        self.setWindowTitle("VEX Snippet Manager")
+        self.setWindowTitle("BYVFX | VEX Snippet Manager")
         self.setModal(False)
         self.resize(800, 600)
         
